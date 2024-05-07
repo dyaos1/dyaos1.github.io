@@ -10,7 +10,8 @@ categories: diary
 
 
 ### 문제
-지킬을 설치하려면 루비가 필요하고, 맥OS는 기본적으로 루비가 깔려 있는데 이 시스템 루비는 구버전이라서 지킬 설치에 적합하지 않다. 새로 루비를 깔게 되면 구버전과 신버전이 충돌을 일으키기 때문에 결국 루비 버전매니저를 깔고 신버전을 설치해야 한다.
+깃헙 페이지를 제대로 쓰려면 지킬(https://jekyllrb.com/)이라는 웹페이지 생성 도구의 사용이 권장 된다.
+맥 OS의 경우 지킬 설치에 조금 애로사항이 있는데, 지킬을 설치하려면 루비가 필요하고, 맥OS는 기본적으로 루비가 깔려 있는데 이 시스템 루비는 구버전이라서 지킬 설치에 적합하지 않다. 새로 루비를 깔게 되면 구버전과 신버전이 충돌을 일으키기 때문에 결국 루비 버전매니저를 깔고 신버전을 설치해야 한다. 지킬 공식문서에서는 버전 매니저로 chruby를 권장하고 있다.
 물론 이 모든 작업을 하기 전에 홈브루는 설치되어 있어야 한다.
 
 
@@ -50,24 +51,32 @@ ruby-install을 이용하여 ruby를 설치한다.
 https://docs.github.com/en/pages
 
 - 닉네임.github.io라는 이름의 repository를 만든다.
+
 - repository setting에서 Pages를 찾아 들어가서 Deploy from Branch를 선택하고, 퍼블리싱 소스는 docs를 선택한다(optional).
+
 - 로컬에 repository와 연동할 폴더를 만들고, 안에 docs폴더를 만들고 jekyll을 시작한다.
-{% highlight ruby %}
+```
 mkdir repository-name && cd repository-name
 mkdir docs && cd docs
 jekyll new --skip-bundle .
-{% endhighlight %}
+```
+
+- Gemfile 수정하기
+  * `gem "jekyll"` 을 comment out 처리한다.
+  * `# gem "github-pages"` 을 다음을 바꾼다.
+  * `gem "github-pages", "~> GITHUB-PAGES-VERSION", group: :jekyll_plugins`
+  * GITHUB-PAGES-VERSION은 다음 사이트 https://pages.github.com/versions/ 를 참고하여 입력한다.
 
 - 생성한 repository를 로컬에 연동한다.
 repository 폴더로 이동 후(cd ..)
-{% highlight %}
+```
 git init
 git add .
 git commit -m "first commit"
 git branch -M main
 git remote add origin https://github.com/${username}/${username}.github.io.git
 git push -u origin main
-{% endhighlight %}
+```
 
 - 잘 되었는지 확인
 repository Settings 로 이동하여 Pages 탭을 클릭, Visit site 링크가 생성 되면 클릭하여 지킬이 잘 실행 되는지 확인한다.
